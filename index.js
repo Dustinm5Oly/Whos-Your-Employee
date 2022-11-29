@@ -31,6 +31,10 @@ function startPrompt(){
                     name: "Add a Department",
                     value: "add_department"
                 },
+                {
+                    name: "Add a Role",
+                    value: "add_role"
+                }
             ]
         }
     ])
@@ -48,6 +52,9 @@ function startPrompt(){
                 break;
             case "add_department":
                 addDepartment();
+                break;
+            case "add_role":
+                addRole();
                 break;
             //continue adding cases
             default: 
@@ -93,3 +100,31 @@ function addDepartment(){
         .then(() => startPrompt())
     })
 }
+function addRole(){
+    inquirer.prompt([
+        {
+            name:"name",
+            message: "What is the name of the Role?"
+        }
+    ])
+    .then (res => {
+        let roleName = res;
+        db.createRole(roleName)
+        .then (()=> console.log(`added role of ${roleName.name} to the database!`))
+        .then(() => startPrompt())
+    })
+}
+// function addEmployee(){
+//     inquirer.prompt([
+//         {
+//             name:"first_name",
+//             message: "What is the first name of the employee?"
+//         }
+//     ])
+//     .then (res => {
+//         let name = res;
+//         db.createEmployee(first_name)
+//         .then (()=> console.log(`added ${name.name} to the database!`))//department_name add if name doesnt work
+//         .then(() => startPrompt())
+//     })
+// }
